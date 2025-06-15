@@ -1,0 +1,72 @@
+components:
+  schemas:
+
+TransactionInitiateRequest:
+  type: object
+  required:
+    - type
+    - amount
+    - currency
+  properties:
+    transaction_id:
+      type: string
+      format: uuid
+      description: ID único generado por el cliente
+    type:
+      type: string
+      description: Tipo dinámico de transacción (debe ser válido por configuración o parametrización)
+      example: REFUND
+    from_account:
+      type: string
+      description: Cuenta de origen (si aplica)
+    to_account:
+      type: string
+      description: Cuenta destino (si aplica)
+    amount:
+      type: number
+      format: double
+      minimum: 0
+      description: Monto principal
+    currency:
+      type: string
+      example: PEN
+    fee:
+      type: number
+      format: double
+      minimum: 0
+      nullable: true
+      description: Comisión aplicada (si corresponde)
+
+    concept:
+      type: string
+      description: Texto visible que describe la transacción
+
+    tags:
+      type: array
+      items:
+        type: string
+      description: Etiquetas de clasificación (opcional)
+
+    channel:
+      type: string
+      example: INTERNAL_SYSTEM
+      description: Fuente o canal que origina la transacción
+
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: Información extensible usada para validar o interpretar la transacción según reglas externas
+
+
+    TransactionResponse:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, CONFIRMED, REJECTED]
+        created_at:
+          type: string
+          format: date-time

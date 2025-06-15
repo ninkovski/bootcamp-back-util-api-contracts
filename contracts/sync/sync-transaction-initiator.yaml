@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Transaction Initiator API
+  version: 1.0.0
+  description: API para iniciar transacciones desde canales sincronizados
+
+components:
+  parameters:
+    TransactionIdHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/TransactionIdHeader'
+    OriginServiceHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/OriginServiceHeader'
+
+  responses:
+    BadRequest:
+      description: Error de validación
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/ValidationErrorResponse'
+
+    NotFound:
+      description: Recurso no encontrado (cuenta, usuario)
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/NotFoundErrorResponse'
+
+    UnprocessableEntity:
+      description: Violación de regla de negocio
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/UnprocessableEntityErrorResponse'
+
+    InternalError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/ErrorResponse'
+
+paths:
+  /transactions/initiate:
+    post:
+      tags:
+        - name: TransactionService
+      summary: Inicia una transacción bancaria
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/transaction-common.yaml#/components/schemas/TransactionInitiateRequest'
+      responses:
+        '202':
+          description: Transacción enviada correctamente para procesamiento
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalError'

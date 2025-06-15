@@ -1,0 +1,34 @@
+components:
+  messages:
+    NotificacionCreada:
+      name: NotificacionCreada
+      title: Notificación enviada al usuario
+      summary: Evento que indica que se ha enviado una notificación por algún canal
+
+      payload:
+        type: object
+        required:
+          - user_id
+          - notification_type
+          - channel
+          - status
+          - message
+        properties:
+          user_id:
+            type: string
+          notification_type:
+            type: string
+            example: TRANSACCION_CONFIRMADA
+          channel:
+            type: string
+            enum: [EMAIL, SMS, PUSH, CALLBACK]
+          status:
+            type: string
+            enum: [DELIVERED, FAILED]
+          message:
+            type: string
+            description: Texto enviado
+          metadata:
+            type: object
+            additionalProperties: true
+            description: Información adicional como IP, intento, correo, etc.

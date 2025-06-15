@@ -1,0 +1,8 @@
+components:
+  messages:
+    TransaccionSolicitada:
+      name: TransaccionSolicitada
+      title: Evento de transacción solicitada
+      summary: Solicitud de ejecución de una transferencia
+      payload:
+        $ref: '../schemas/transaction-common.yaml#/components/schemas/TransactionInitiateRequest'

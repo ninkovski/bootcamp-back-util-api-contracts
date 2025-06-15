@@ -1,0 +1,29 @@
+components:
+  messages:
+    TransaccionRegistrada:
+      name: TransaccionRegistrada
+      title: Confirmación de transacción procesada
+      summary: Indica que la transacción fue ejecutada con éxito o rechazada
+
+      payload:
+        type: object
+        required:
+          - transaction_id
+          - status
+          - timestamp
+        properties:
+          transaction_id:
+            type: string
+          status:
+            type: string
+            enum: [CONFIRMED, REJECTED]
+          reason:
+            type: string
+            nullable: true
+            description: Motivo de rechazo si aplica
+          timestamp:
+            type: string
+            format: date-time
+          metadata:
+            type: object
+            additionalProperties: true

@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: Account Service API
+  version: 1.0.0
+  description: API para consultar y administrar cuentas bancarias
+
+components:
+  parameters:
+    TransactionIdHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/TransactionIdHeader'
+    OriginServiceHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/OriginServiceHeader'
+
+paths:
+  /accounts:
+    post:
+      tags:
+        - name: AccountService
+      summary: Crear nueva cuenta
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/account-common.yaml#/components/schemas/AccountCreateRequest'
+      responses:
+        '201':
+          description: Cuenta creada
+
+  /accounts/{accountId}:
+    get:
+      tags:
+        - name: AccountService
+      summary: Obtener detalles de cuenta
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: path
+          name: accountId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalle de la cuenta
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/account-common.yaml#/components/schemas/AccountResponse'
+
+  /accounts/by-user/{userId}:
+    get:
+      tags:
+        - name: AccountService
+      summary: Listar cuentas asociadas a un usuario
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de cuentas asociadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../schemas/account-common.yaml#/components/schemas/AccountResponse'
+
+  /accounts/{accountId}/balance:
+    get:
+      tags:
+        - name: AccountService
+      summary: Consultar saldo de cuenta
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: path
+          name: accountId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Saldo actual de la cuenta
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/account-common.yaml#/components/schemas/BalanceResponse'

@@ -1,0 +1,31 @@
+components:
+  messages:
+    DeudaVencida:
+      name: DeudaVencida
+      title: Evento de deuda vencida
+      summary: Se emite cuando una deuda vence su fecha límite de pago
+
+      payload:
+        type: object
+        required:
+          - user_id
+          - account_id
+          - amount
+          - due_date
+        properties:
+          user_id:
+            type: string
+          account_id:
+            type: string
+          amount:
+            type: number
+            format: double
+          due_date:
+            type: string
+            format: date
+          reference:
+            type: string
+            description: Identificador único o código de la deuda
+          metadata:
+            type: object
+            additionalProperties: true

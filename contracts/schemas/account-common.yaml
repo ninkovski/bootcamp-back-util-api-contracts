@@ -1,0 +1,52 @@
+components:
+  schemas:
+
+    AccountCreateRequest:
+      type: object
+      required:
+        - user_id
+        - account_type
+        - currency
+      properties:
+        user_id:
+          type: string
+          description: ID del usuario propietario de la cuenta
+        account_type:
+          type: string
+          enum: [SAVINGS, CURRENT]
+          description: Tipo de cuenta bancaria
+        currency:
+          type: string
+          example: PEN
+          description: Código de moneda ISO 4217
+
+    AccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID único de la cuenta
+        user_id:
+          type: string
+        account_type:
+          type: string
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE, CLOSED]
+        created_at:
+          type: string
+          format: date-time
+
+    BalanceResponse:
+      type: object
+      properties:
+        account_id:
+          type: string
+        available_balance:
+          type: number
+          format: double
+        currency:
+          type: string
+          example: PEN

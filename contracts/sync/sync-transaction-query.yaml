@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Transaction Query API
+  version: 1.0.0
+  description: API para consultar transacciones por ID, cuenta o rango de fechas
+
+components:
+  parameters:
+    TransactionIdHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/TransactionIdHeader'
+    OriginServiceHeader:
+      $ref: '../schemas/headers.yaml#/components/parameters/OriginServiceHeader'
+
+  responses:
+    NotFoundError:
+      description: Transacción no encontrada
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/ErrorResponse'
+
+    InternalError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/validations.yaml#/components/schemas/ErrorResponse'
+
+paths:
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - name: TransactionQuery
+      summary: Consultar una transacción por ID
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: path
+          name: transactionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalle de la transacción
+          content:
+            application/json:
+              schema:
+                $ref: '../schemas/transaction-common.yaml#/components/schemas/TransactionResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /transactions/by-account/{accountId}:
+    get:
+      tags:
+        - name: TransactionQuery
+      summary: Listar transacciones por cuenta
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: path
+          name: accountId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de transacciones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../schemas/transaction-common.yaml#/components/schemas/TransactionResponse'
+
+  /transactions/by-date:
+    get:
+      tags:
+        - name: TransactionQuery
+      summary: Listar transacciones por rango de fechas
+      parameters:
+        - $ref: '#/components/parameters/TransactionIdHeader'
+        - $ref: '#/components/parameters/OriginServiceHeader'
+        - in: query
+          name: start_date
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end_date
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Lista de transacciones por fecha
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../schemas/transaction-common.yaml#/components/schemas/TransactionResponse'
