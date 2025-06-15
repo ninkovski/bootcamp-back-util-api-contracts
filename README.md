@@ -65,10 +65,12 @@ Este repositorio proporciona una fuente de información centralizada para los co
 
 ## 👨‍🏫 Autor
 
-**Ninkovski**
+**Ninkovski Morales**
 
-Bootcamp Backend - Preparación de backend java semisenior
+## Bootcamp Backend 
+
+Preparación de backend java semisenior
 
 ---
 
-Si te resultó útil este repositorio, puedes compartirlo, hacer fork o extenderlo para nuevos contextos como APIs RESTful públicas o integraciones con sistemas legacy.
+Si te resultó útil este repositorio, puedes compartirlo, o basarte en estos archivos para crear tus propios proyectos, la idea es que puedas aprender a manejar un grupo de contratos y puedas modelar servicios sin necesidad de implementarlos antes.
