@@ -35,7 +35,7 @@ Este repositorio contiene los contratos de APIs síncronas (OpenAPI) y asíncron
 
 ## ✅ Propósito
 
-Este repositorio proporciona una fuente de verdad centralizada para los contratos de comunicación entre microservicios:
+Este repositorio proporciona una fuente de información centralizada para los contratos de comunicación entre microservicios para nuestro bootcamp-back:
 
 * 📘 OpenAPI para operaciones síncronas
 * 📗 AsyncAPI para eventos en Kafka
@@ -56,18 +56,6 @@ Este repositorio proporciona una fuente de verdad centralizada para los contrato
 
    ```bash
    git clone https://github.com/ninkovski/bootcamp-back-util-api-contracts.git
-   ```
-2. Compilar la librería para uso local (opcional):
-   ```bash
-   mvn clean install
-   ```
-3. Importar la librería en otro proyecto:
-   ```bash
-   <dependency>
-      <groupId>com.ninkovski</groupId>
-      <artifactId>bootcamp-back-util-api-contracts</artifactId>
-      <version>1.0.0</version>
-    </dependency>
    ```
 2. Usar Swagger UI o Redoc para visualizar los OpenAPI specs
 
